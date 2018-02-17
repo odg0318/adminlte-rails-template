@@ -8,24 +8,26 @@ module Admin
     # GET /users
     # GET /users.json
     def index
-      authorize User
       @users = User.all
     end
 
     # GET /users/1
     # GET /users/1.json
     def show
+      @roles = Role.all
     end
 
     # GET /users/new
     def new
       @user = User.new
       @url = admin_users_path
+      @roles = Role.all
     end
 
     # GET /users/1/edit
     def edit
       @url = admin_user_path(@user)
+      @roles = Role.all
     end
 
     # POST /users
@@ -45,7 +47,7 @@ module Admin
     # PATCH/PUT /users/1
     # PATCH/PUT /users/1.json
     def update
-      if @user.update(user_params)
+      if update_user 
         flash[:notice] = t('admin.users.update.success')
         respond_with :edit, :admin, @user
       else
@@ -71,7 +73,15 @@ module Admin
 
     # Never trust parameters from the scary internet, only allow the white list through.
     private def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :name, :role)
+      params.require(:user).permit(:email, :password, :password_confirmation, :name, :role_id)
+    end
+
+    private def update_user
+      if user_params[:password].blank?
+        @user.update_without_password(user_params)
+      else
+        @user.update(user_params)
+      end
     end
   end
 end

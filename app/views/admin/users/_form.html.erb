@@ -24,6 +24,6 @@
 
 <div class="form-group">
   <%= f.label :role %>
-  <%= f.select :role , [['admin', 'admin'], ['board', 'board'], ['guest', 'guest']], {}, {class: "form-control"} %>
+  <%= f.select :role_id, options_for_select(Role.all.map{|r| [r.name, r.id]}, @user.role_id), {}, {class: "form-control"} %>
   <span class="help-block"><i>* This field is required</i><span>
 </div>
