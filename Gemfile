@@ -5,7 +5,7 @@ ruby '2.4.0'
 
 # General list of gems
 gem 'rails', '5.0.2'
-gem 'pg'
+gem 'mysql2'
 gem 'puma'
 gem 'sass-rails'
 gem 'uglifier'
@@ -48,6 +48,8 @@ group :development do
   gem 'pry-remote'
   gem 'pry-stack_explorer'
   gem 'pry-rescue'
+
+  gem 'sqlite3'
 end
 
 # Only Test env gems

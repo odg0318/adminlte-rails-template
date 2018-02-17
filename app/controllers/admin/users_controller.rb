@@ -1,11 +1,14 @@
 module Admin
   class UsersController < Admin::ApplicationController
+    include Pundit
+
     respond_to :json, :html
     before_action :set_user, only: [:show, :edit, :update, :destroy]
 
     # GET /users
     # GET /users.json
     def index
+      authorize User
       @users = User.all
     end
 
@@ -68,7 +71,7 @@ module Admin
 
     # Never trust parameters from the scary internet, only allow the white list through.
     private def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :name)
+      params.require(:user).permit(:email, :password, :password_confirmation, :name, :role)
     end
   end
 end
